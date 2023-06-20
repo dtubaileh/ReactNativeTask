@@ -13,7 +13,7 @@ class Api {
 
     getAllUsers = (): Promise<IUser[]> => {
         return new Promise((resolve, reject) => {
-            axios.post<IUser[]>('https://jsonplaceholder.typicode.com/posts')
+            axios.get<IUser[]>('https://jsonplaceholder.typicode.com/posts')
                 .then((response) => {
                     console.log("getAllUsers",response)
                     resolve(response.data)
