@@ -1,6 +1,6 @@
 import { StyleSheet, View, Text, TextInput, Button, Alert } from 'react-native';
 import React, { useState } from 'react';
-import { api } from "../services/apiServicess"
+import { IUser, api } from "../services/apiServicess"
 
 export function FormScreen({ route, navigation }) {
 
@@ -10,7 +10,7 @@ export function FormScreen({ route, navigation }) {
 
     const onSubmit = () => {
         api.updateUser({ ...selectedItem, title, body })
-            .then(() => {
+            .then((updatedUser: IUser) => {
                 Alert.alert("Successfully Updated")
             })
             .catch((error) => {
@@ -25,28 +25,28 @@ export function FormScreen({ route, navigation }) {
 
     };
 
+    const InputComponent = (props: { name: string, value: string, onChangeText: (text: string) => void }) => {
+        const { name, value, onChangeText } = props
+        return (
+            <View style={styles.textContainer}>
+                <Text style={styles.text}>{name}</Text>
+                <TextInput
+                    placeholder={name}
+                    value={value}
+                    style={styles.textInput}
+                    onChangeText={onChangeText}
+                    multiline={true}
+                    autoFocus={true}
+                />
+            </View>
+        )
+
+    }
+
     return (
         <View style={styles.constrainer}>
-            <View style={styles.textContainer}>
-                <Text style={styles.text}>Title:</Text>
-                <TextInput
-                    placeholder='Title'
-                    value={title}
-                    style={styles.textInput}
-                    onChangeText={setTitle}
-                    multiline={true}
-                />
-            </View>
-            <View style={styles.textContainer}>
-                <Text style={styles.text}>Body:</Text>
-                <TextInput
-                    placeholder='Body'
-                    value={body}
-                    style={styles.textInput}
-                    onChangeText={setBody}
-                    multiline={true}
-                />
-            </View>
+            <InputComponent name='Title' value={title} onChangeText={setTitle} />
+            <InputComponent name='Body' value={body} onChangeText={setBody} />
             <Button title={"Submit"} onPress={onSubmit} />
         </View>
     );
@@ -58,12 +58,16 @@ const styles = StyleSheet.create({
         margin: 10
     },
     textInput: {
-        margin: 10,
+        margin: 3,
         padding: 5,
-        borderColor: '#808080',
         borderWidth: 1,
         borderRadius: 8,
+        borderColor: '#808080',
         backgroundColor: '#fff',
+        shadowColor: '#808080',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+
     },
     text: {
         fontWeight: 'bold',

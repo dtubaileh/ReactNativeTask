@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export interface IUser {
     userId: number
-    id: number
+    id?: number
     title: string
     body: string
 }
@@ -28,9 +28,25 @@ class Api {
         })
     }
 
-      updateUser = (user:IUser): Promise<IUser> => {
+    updateUser = (user: IUser): Promise<IUser> => {
         return new Promise((resolve, reject) => {
-            axios.put<IUser>(`${this.baseURL}/${user.id}`,{
+            axios.put<IUser>(`${this.baseURL}/${user.id}`, {
+                ...user
+            })
+                .then((response) => {
+                    resolve(response.data)
+                })
+                .catch((error: any) => {
+                    // handle error
+                    console.log(error);
+                    reject(error)
+                })
+        })
+    }
+
+    addUser = (user: IUser): Promise<IUser> => {
+        return new Promise((resolve, reject) => {
+            axios.post<IUser>(this.baseURL, {
                 ...user
             })
                 .then((response) => {
