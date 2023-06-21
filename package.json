@@ -8,10 +8,11 @@
   },
   "dependencies": {
     "@react-navigation/native": "^6.1.6",
-    "axios": "^1.4.0",
+    "@react-navigation/native-stack": "^6.9.12",
     "@types/react": "~18.0.0",
     "@types/react-native": "~0.69.1",
     "@userfront/core": "0.4.6",
+    "axios": "^1.4.0",
     "expo": "~46.0.21",
     "expo-constants": "~13.2.4",
     "expo-secure-store": "~11.3.0",
