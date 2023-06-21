@@ -1,37 +1,75 @@
-import { StyleSheet, View, Text } from 'react-native';
-import React, {  } from 'react';
+import { StyleSheet, View, Text, TextInput, Button, Alert } from 'react-native';
+import React, { useState } from 'react';
+import { api } from "../services/apiServicess"
 
+export function FormScreen({ route, navigation }) {
 
-export  function FormScreen() {
+    const { selectedItem } = route.params;
+    const [title, setTitle] = useState<string>(selectedItem.title ?? '')
+    const [body, setBody] = useState<string>(selectedItem.body ?? '')
 
-    
+    const onSubmit = () => {
+        api.updateUser({ ...selectedItem, title, body })
+            .then(() => {
+                Alert.alert("Successfully Updated")
+            })
+            .catch((error) => {
+                Alert.alert(
+                    "Failed To Update",
+                    `${error}`,
+                );
+
+            }).finally(() => {
+                navigation.goBack()
+            })
+
+    };
+
     return (
-        <View>
-            <Text>Deial</Text>
+        <View style={styles.constrainer}>
+            <View style={styles.textContainer}>
+                <Text style={styles.text}>Title:</Text>
+                <TextInput
+                    placeholder='Title'
+                    value={title}
+                    style={styles.textInput}
+                    onChangeText={setTitle}
+                    multiline={true}
+                />
+            </View>
+            <View style={styles.textContainer}>
+                <Text style={styles.text}>Body:</Text>
+                <TextInput
+                    placeholder='Body'
+                    value={body}
+                    style={styles.textInput}
+                    onChangeText={setBody}
+                    multiline={true}
+                />
+            </View>
+            <Button title={"Submit"} onPress={onSubmit} />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    list: { margin: 5 },
-    cardContainer: {
+    constrainer: {
         flex: 1,
-        backgroundColor: '#fff',
-        padding: 8,
-        margin: 5,
-        flexDirection: 'column',
+        margin: 10
+    },
+    textInput: {
+        margin: 10,
+        padding: 5,
         borderColor: '#808080',
         borderWidth: 1,
         borderRadius: 8,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.3,
-        shadowRadius: 4,
-        elevation: 4,
+        backgroundColor: '#fff',
     },
-    titleText: {
+    text: {
         fontWeight: 'bold',
-        fontSize: 18
+    },
+    textContainer: {
+        margin: 10
     }
 
 });

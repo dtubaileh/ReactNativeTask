@@ -16,19 +16,19 @@ export function ListScreen({ navigation }) {
     }, [])
     //TODO: handle names for screens
     const renderItem = ({ item }: { item: IUser }): ReactElement => (
-        <Pressable style={styles.cardContainer} onPress={() => navigation.navigate('Form Screen')}>
+        <Pressable style={styles.cardContainer} onPress={() => navigation.navigate('Form Screen', { selectedItem: item })}>
             <Text style={styles.titleText}>{item.title}</Text>
             <Text style={styles.bodyText}>{item.body}</Text>
         </Pressable>
     );
 
     return (
-            <FlatList
-                style={styles.list}
-                data={usersList}
-                renderItem={renderItem}
-                keyExtractor={(item: IUser) => `${item.title}-${item.id}`}
-            />
+        <FlatList
+            style={styles.list}
+            data={usersList}
+            renderItem={renderItem}
+            keyExtractor={(item: IUser) => `${item.title}-${item.id}`}
+        />
     );
 }
 
@@ -52,10 +52,10 @@ const styles = StyleSheet.create({
     titleText: {
         fontWeight: 'bold',
         fontSize: 18,
-        padding:5
+        padding: 5
     },
     bodyText: {
-        padding:5
+        padding: 5
     }
 
 

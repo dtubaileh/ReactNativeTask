@@ -18,7 +18,6 @@ class Api {
         return new Promise((resolve, reject) => {
             axios.get<IUser[]>(this.baseURL)
                 .then((response) => {
-                    console.log("getAllUsers", response)
                     resolve(response.data)
                 })
                 .catch((error: any) => {
@@ -29,22 +28,21 @@ class Api {
         })
     }
 
-    //   updateUser = (user:IUser): Promise<IUser[]> => {
-    //     return new Promise((resolve, reject) => {
-    //         axios.put<IUser[]>(`https://jsonplaceholder.typicode.com/posts/${user.id}`,{
-    //             ...user
-    //         })
-    //             .then((response) => {
-    //                 console.log("updateUser",response)
-    //                 resolve(response.data)
-    //             })
-    //             .catch((error: any) => {
-    //                 // handle error
-    //                 console.log(error);
-    //                 reject(error)
-    //             })
-    //     })
-    // }
+      updateUser = (user:IUser): Promise<IUser> => {
+        return new Promise((resolve, reject) => {
+            axios.put<IUser>(`${this.baseURL}/${user.id}`,{
+                ...user
+            })
+                .then((response) => {
+                    resolve(response.data)
+                })
+                .catch((error: any) => {
+                    // handle error
+                    console.log(error);
+                    reject(error)
+                })
+        })
+    }
 
 
 }
