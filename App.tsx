@@ -4,15 +4,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ListScreen, FormScreen, UsersContextProvider } from './components/';
 import { IUser } from './services/apiServicess';
 import { Button, StyleSheet } from 'react-native';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { COLORS, SCREENS_NAME } from "./utils"
 
-export const SCREENS_NAME = {
-  listScreen: 'List Screen',
-  formScreen: 'Form Screen'
-}
 
 export default function App() {
   const Stack = createNativeStackNavigator();
-  const [usersList, setUserList] = useState<IUser[]>([])
 
   return (
     <UsersContextProvider>
@@ -21,9 +18,9 @@ export default function App() {
           initialRouteName={SCREENS_NAME.listScreen}
           screenOptions={{
             headerStyle: {
-              backgroundColor: '#801b49',
+              backgroundColor: COLORS.tintPurple,
             },
-            headerTintColor: '#fff',
+            headerTintColor: COLORS.white,
           }}
         >
           <Stack.Screen
@@ -31,12 +28,7 @@ export default function App() {
             component={ListScreen}
             options={({ navigation }) => ({
               headerRight: () => (
-                <Button
-                  onPress={() => {
-                    // Handle button press here
-                  }}
-                  title="Button"
-                />
+                <Ionicons name="add" size={32} color={COLORS.white} onPress={() => navigation.navigate(SCREENS_NAME.formScreen)} />
               ),
             })} />
           <Stack.Screen
@@ -48,18 +40,3 @@ export default function App() {
     </UsersContextProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  tabBar: {
-    backgroundColor: "#801b49",
-  },
-  tabBarLabel: {
-    fontSize: 12,
-    lineHeight: 16,
-    flex: 1,
-  },
-  tabBarItem: {
-    paddingTop: 16
-  }
-})
-

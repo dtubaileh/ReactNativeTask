@@ -2,7 +2,7 @@ import { StyleSheet, FlatList, Text, Pressable } from 'react-native';
 import { IUser, api } from "../services/apiServicess"
 import React, { ReactElement, useContext, useEffect } from 'react';
 import { UsersListContext } from "./ContextAPI"
-import {SCREENS_NAME} from "../App"
+import { SCREENS_NAME, COLORS } from "../utils"
 
 export function ListScreen({ navigation }) {
     const { usersList, setUserList } = useContext(UsersListContext)
@@ -34,14 +34,14 @@ const styles = StyleSheet.create({
     list: { margin: 5 },
     cardContainer: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: COLORS.white,
         padding: 8,
         margin: 5,
         flexDirection: 'column',
-        borderColor: '#808080',
+        borderColor: COLORS.gray,
         borderWidth: 1,
         borderRadius: 8,
-        shadowColor: '#808080',
+        shadowColor: COLORS.gray,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.3,
         shadowRadius: 4,
