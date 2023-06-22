@@ -31,7 +31,7 @@ export function ListScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-    list: { margin: 5 },
+    list: { margin: 5, backgroundColor:COLORS.white },
     cardContainer: {
         flex: 1,
         backgroundColor: COLORS.white,
@@ -41,9 +41,9 @@ const styles = StyleSheet.create({
         borderColor: COLORS.gray,
         borderWidth: 1,
         borderRadius: 8,
-        shadowColor: COLORS.gray,
+        shadowColor: COLORS.black,
         shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.3,
+        shadowOpacity: 0.5,
         shadowRadius: 4,
         elevation: 4,
     },

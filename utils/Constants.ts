@@ -6,5 +6,6 @@ export const SCREENS_NAME = {
 export const COLORS = {
     tintPurple: '#801b49',
     white: '#ffff',
+    black:'#000',
     gray:'#808080'
 }
