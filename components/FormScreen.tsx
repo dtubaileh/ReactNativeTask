@@ -1,9 +1,10 @@
 import { StyleSheet, View, Text, TextInput, Button, Alert } from 'react-native';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { IUser, api } from "../services/apiServicess"
-
+import { UsersListContext } from "./ContextAPI"
 export function FormScreen({ route, navigation }) {
 
+    const { usersList, setUserList } = useContext(UsersListContext);
     const { selectedItem } = route.params;
     const [title, setTitle] = useState<string>(selectedItem.title ?? '')
     const [body, setBody] = useState<string>(selectedItem.body ?? '')
@@ -11,6 +12,7 @@ export function FormScreen({ route, navigation }) {
     const onSubmit = () => {
         api.updateUser({ ...selectedItem, title, body })
             .then((updatedUser: IUser) => {
+                setUserList(usersList.map((item) => (item.id === updatedUser.id ? updatedUser : item)))
                 Alert.alert("Successfully Updated")
             })
             .catch((error) => {
@@ -22,8 +24,8 @@ export function FormScreen({ route, navigation }) {
             }).finally(() => {
                 navigation.goBack()
             })
+    }
 
-    };
 
     const InputComponent = (props: { name: string, value: string, onChangeText: (text: string) => void }) => {
         const { name, value, onChangeText } = props
@@ -40,7 +42,6 @@ export function FormScreen({ route, navigation }) {
                 />
             </View>
         )
-
     }
 
     return (

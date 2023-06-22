@@ -1,12 +1,11 @@
-import { StyleSheet, View, FlatList, Text, SafeAreaView, Pressable } from 'react-native';
+import { StyleSheet, FlatList, Text, Pressable } from 'react-native';
 import { IUser, api } from "../services/apiServicess"
-import React, { ReactElement, useEffect, useState } from 'react';
-
+import React, { ReactElement, useContext, useEffect } from 'react';
+import { UsersListContext } from "./ContextAPI"
 
 
 export function ListScreen({ navigation }) {
-
-    const [usersList, setUserList] = useState<IUser[]>([])
+    const { usersList, setUserList } = useContext(UsersListContext)
 
     useEffect(() => {
         // fetch the users list when the component mounted
