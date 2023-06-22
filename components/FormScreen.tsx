@@ -2,13 +2,15 @@ import { StyleSheet, View, Text, TextInput, Button, Alert } from 'react-native';
 import React, { useContext, useState } from 'react';
 import { IUser, api } from "../services/apiServicess"
 import { UsersListContext } from "./ContextAPI"
-export function FormScreen({ route, navigation }) {
 
+export function FormScreen({ route, navigation }) {
     const { usersList, setUserList } = useContext(UsersListContext);
     const { selectedItem } = route.params;
     const [title, setTitle] = useState<string>(selectedItem.title ?? '')
     const [body, setBody] = useState<string>(selectedItem.body ?? '')
+    const [isError, setIsError] = useState<boolean>(false)
 
+    //TODO: validate for on submit, change UI for On submit
     const onSubmit = () => {
         api.updateUser({ ...selectedItem, title, body })
             .then((updatedUser: IUser) => {
@@ -27,27 +29,30 @@ export function FormScreen({ route, navigation }) {
     }
 
 
-    const InputComponent = (props: { name: string, value: string, onChangeText: (text: string) => void }) => {
-        const { name, value, onChangeText } = props
-        return (
+    return (
+        <View style={styles.constrainer}>
             <View style={styles.textContainer}>
-                <Text style={styles.text}>{name}</Text>
+                <Text style={styles.text}>{"Title"}</Text>
                 <TextInput
-                    placeholder={name}
-                    value={value}
+                    placeholder={"Title"}
+                    value={title}
                     style={styles.textInput}
-                    onChangeText={onChangeText}
+                    onChangeText={setTitle}
                     multiline={true}
                     autoFocus={true}
                 />
             </View>
-        )
-    }
-
-    return (
-        <View style={styles.constrainer}>
-            <InputComponent name='Title' value={title} onChangeText={setTitle} />
-            <InputComponent name='Body' value={body} onChangeText={setBody} />
+            <View style={styles.textContainer}>
+                <Text style={styles.text}>{"Body"}</Text>
+                <TextInput
+                    placeholder={"Body"}
+                    value={body}
+                    style={styles.textInput}
+                    onChangeText={setBody}
+                    multiline={true}
+                />
+            </View>
+            {isError && <Text style={styles.warningMsg}>Error: Title and/or Body must be filled </Text>}
             <Button title={"Submit"} onPress={onSubmit} />
         </View>
     );
@@ -74,6 +79,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     textContainer: {
+        margin: 10
+    },
+    warningMsg: {
+        color: "red",
         margin: 10
     }
 

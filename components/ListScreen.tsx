@@ -2,7 +2,7 @@ import { StyleSheet, FlatList, Text, Pressable } from 'react-native';
 import { IUser, api } from "../services/apiServicess"
 import React, { ReactElement, useContext, useEffect } from 'react';
 import { UsersListContext } from "./ContextAPI"
-
+import {SCREENS_NAME} from "../App"
 
 export function ListScreen({ navigation }) {
     const { usersList, setUserList } = useContext(UsersListContext)
@@ -13,9 +13,8 @@ export function ListScreen({ navigation }) {
             setUserList(users)
         })
     }, [])
-    //TODO: handle names for screens
     const renderItem = ({ item }: { item: IUser }): ReactElement => (
-        <Pressable style={styles.cardContainer} onPress={() => navigation.navigate('Form Screen', { selectedItem: item })}>
+        <Pressable style={styles.cardContainer} onPress={() => navigation.navigate(SCREENS_NAME.formScreen, { selectedItem: item })}>
             <Text style={styles.titleText}>{item.title}</Text>
             <Text style={styles.bodyText}>{item.body}</Text>
         </Pressable>
